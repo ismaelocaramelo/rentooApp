@@ -1,4 +1,7 @@
 const mongoose  = require('mongoose');
+const bcrypt  = require('bcrypt');
+const validator = require('validator');
+
 
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
@@ -28,7 +31,6 @@ userSchema.methods.validatePassword = validatePassword;
 userSchema.set('toJSON', {
   transform: function(doc, ret) {
     delete ret.passwordHash;
-    delete ret.email;
     delete ret.__v;
     return ret;
   }

@@ -7,11 +7,10 @@ module.exports = {
 const User           = require('../models/user');
 const config         = require('../config/config');
 const jwt            = require('jsonwebtoken');         // used to create, sign, and verify tokens
-//const expressjwt     = require('express-jwt');
 
 function authenticationsRegister(req, res){
   User.create(req.body.user, (err, user) => {
-    if (err) return res.status(500).json({success: false, message: `Something went wrong: ${err.message}` });
+    if (err) return res.status(600).json({success: false, message: `Something went wrong: ${err.message}` });
     if (!user) return res.status(500).json({success: false, message: 'No user has been created' });
     const token = jwt.sign({id: user._id}, config.secret, {expiresIn: 60 * 60} );
     return res.status(201).json({success: true, message: `Welcome ${user.username}!`, user, token});
